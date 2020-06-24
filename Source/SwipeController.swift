@@ -87,9 +87,13 @@ class SwipeController: NSObject {
                 
                 showActionsView(for: orientation)
             }
+            
+            guard let actionsView = swipeable.actionsView else { return }
+            actionsView.isHidden = true
         case .changed:
             guard let actionsView = swipeable.actionsView, let actionsContainerView = self.actionsContainerView else { return }
             guard swipeable.state.isActive else { return }
+            actionsView.isHidden = false
             
             if swipeable.state == .animatingToCenter {
                 let swipedCell = scrollView?.swipeables.first(where: { $0.state == .dragging || $0.state == .left || $0.state == .right }) as? UIView

@@ -88,7 +88,7 @@ class SwipeController: NSObject {
                 showActionsView(for: orientation)
             }
             
-            guard let actionsView = swipeable.actionsView else { return }
+            guard let actionsView = swipeable.actionsView, swipeable.state == .dragging else { return }
             actionsView.isHidden = true
         case .changed:
             guard let actionsView = swipeable.actionsView, let actionsContainerView = self.actionsContainerView else { return }
@@ -111,7 +111,6 @@ class SwipeController: NSObject {
                 target.center.x = gesture.elasticTranslation(in: target,
                                                              withLimit: .zero,
                                                              fromOriginalCenter: CGPoint(x: originalCenter, y: 0)).x
-                swipeable.actionsView?.visibleWidth = abs((swipeable as Swipeable).frame.minX)
                 scrollRatio = elasticScrollRatio
                 return
             }
